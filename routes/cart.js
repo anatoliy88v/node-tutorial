@@ -1,27 +1,27 @@
 const {Router} = require('express')
 const router = Router()
-const Card = require('../models/card')
+const Cart = require('../models/cart')
 const Course = require('../models/course')
 
 
 router.post('/add', async (req, res) => {
   const course = await Course.getById(req.body.id)
-  await Card.add(course)
-  res.redirect('/card')
+  await Cart.add(course)
+  res.redirect('/cart')
 })
 
 router.delete('/remove/:id', async (req, res) => {
-  const card = await Card.remove(req.params.id)
-  res.status(200).json(card)
+  const cart = await Cart.remove(req.params.id)
+  res.status(200).json(cart)
 })
 
 router.get('/', async (req, res) => {
-  const card = await Card.fetch()
-  res.render('card', {
-    title: 'Card',
-    isCard: true,
-    courses: card.courses,
-    price: card.price
+  const cart = await Cart.fetch()
+  res.render('cart', {
+    title: 'Cart',
+    isCart: true,
+    courses: cart.courses,
+    price: cart.price
   })
 })
 

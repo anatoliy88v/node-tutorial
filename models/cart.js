@@ -4,30 +4,30 @@ const fs = require('fs')
 const p = path.join(
   path.dirname(process.mainModule.filename),
   'data',
-  'card.json'
+  'cart.json'
 )
 
-class Card {
+class Cart {
   static async add(course) {
-    const card = await Card.fetch()
+    const cart = await Cart.fetch()
 
-    const idx = card.courses.findIndex(c => c.id === course.id)
-    const candidate = card.courses[idx]
+    const idx = cart.courses.findIndex(c => c.id === course.id)
+    const candidate = cart.courses[idx]
 
     if (candidate) {
       // check if course already in the cart and ++ it quantity
       candidate.count++
-      card.courses[idx] = candidate
+      cart.courses[idx] = candidate
     } else {
-      // add course to the card
+      // add course to the cart
       course.count = 1
-      card.courses.push(course)
+      cart.courses.push(course)
     }
 
-    card.price += +course.price
+    cart.price += +course.price
 
     return new Promise ((resolve, reject) => {
-      fs.writeFile(p, JSON.stringify(card), err => {
+      fs.writeFile(p, JSON.stringify(cart), err => {
         if (err) {
           reject(err)
         } else {
@@ -38,26 +38,26 @@ class Card {
   }
 
   static async remove(id) {
-    const card = await Card.fetch()
-    const idx = card.courses.findIndex(c => c.id === id)
-    const course = card.courses[idx]
+    const cart = await Cart.fetch()
+    const idx = cart.courses.findIndex(c => c.id === id)
+    const course = cart.courses[idx]
 
     if (course.count === 1) {
       // delete
-      card.courses = card.courses.filter(c => c.id !== id)
+      cart.courses = cart.courses.filter(c => c.id !== id)
     } else {
       // change quantity
-      card.courses[idx].count--
+      cart.courses[idx].count--
     }
 
-    card.price -= course.price
+    cart.price -= course.price
 
     return new Promise ((resolve, reject) => {
-      fs.writeFile(p, JSON.stringify(card), err => {
+      fs.writeFile(p, JSON.stringify(cart), err => {
         if (err) {
           reject(err)
         } else {
-          resolve(card)
+          resolve(cart)
         }
       })
     })
@@ -76,4 +76,4 @@ class Card {
   }
 }
 
-module.exports = Card
+module.exports = Cart
