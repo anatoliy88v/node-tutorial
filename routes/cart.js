@@ -1,12 +1,12 @@
 const {Router} = require('express')
 const router = Router()
 const Cart = require('../models/cart')
-const Course = require('../models/course')
+const Product = require('../models/product')
 
 
 router.post('/add', async (req, res) => {
-  const course = await Course.getById(req.body.id)
-  await Cart.add(course)
+  const product = await Product.getById(req.body.id)
+  await Cart.add(product)
   res.redirect('/cart')
 })
 
@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
   res.render('cart', {
     title: 'Cart',
     isCart: true,
-    courses: cart.courses,
+    products: cart.products,
     price: cart.price
   })
 })

@@ -1,7 +1,7 @@
-<h1>Courses</h1>
+<h1>Products</h1>
 
-{{#if courses.length}}
-  {{#each courses}}
+{{#if products.length}}
+  {{#each products}}
     <div class="row">
       <div class="col s6 offset-s3">
         <div class="card">
@@ -13,8 +13,8 @@
             <p class="price">{{price}}</p>
           </div>
           <div class="card-action actions">
-            <a href="/courses/{{id}}" target="_blank">Open course</a>
-            <a href="/courses/{{id}}/edit?allow=true">Edit course</a>
+            <a href="/products/{{id}}" target="_blank">Open product</a>
+            <a href="/products/{{id}}/edit?allow=true">Edit product</a>
             <form action="/cart/add" method="POST">
               <input type="hidden" name="id" value="{{id}}">
               <button type="submit" class="btn btn-primary">Buy</button>
@@ -25,5 +25,5 @@
     </div>
   {{/each}}
 {{else}}
-  <p>No courses</p>
+  <p>No products</p>
 {{/if}}

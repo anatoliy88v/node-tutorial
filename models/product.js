@@ -2,7 +2,7 @@ const { v4: uuidv4 } = require('uuid')
 const fs = require('fs')
 const path = require('path')
 
-class Course {
+class Product {
   constructor(title, price, img) {
     this.title = title
     this.price = price
@@ -20,13 +20,13 @@ class Course {
   }
 
   async save() {
-    const courses = await Course.getAll()
-    courses.push(this.toJSON())
+    const products = await Product.getAll()
+    products.push(this.toJSON())
 
     return new Promise((resolve, reject) => {
       fs.writeFile(
-        path.join(__dirname, '..', 'data', 'courses.json'),
-        JSON.stringify(courses),
+        path.join(__dirname, '..', 'data', 'products.json'),
+        JSON.stringify(products),
         (err) => {
           if (err) {
             reject(err)
@@ -38,16 +38,16 @@ class Course {
     })
   }
 
-  static async update(course) {
-    const courses = await Course.getAll()
+  static async update(product) {
+    const products = await Product.getAll()
 
-    const idx = courses.findIndex(c => c.id === course.id)
-    courses[idx] = course
+    const idx = products.findIndex(c => c.id === product.id)
+    products[idx] = product
 
     return new Promise((resolve, reject) => {
       fs.writeFile(
-        path.join(__dirname, '..', 'data', 'courses.json'),
-        JSON.stringify(courses),
+        path.join(__dirname, '..', 'data', 'products.json'),
+        JSON.stringify(products),
         (err) => {
           if (err) {
             reject(err)
@@ -62,7 +62,7 @@ class Course {
   static getAll() {
     return new Promise((resolve, reject) => {
       fs.readFile(
-        path.join(__dirname, '..', 'data', 'courses.json'),
+        path.join(__dirname, '..', 'data', 'products.json'),
         'utf-8',
         (err, content) => {
           if (err) {
@@ -76,9 +76,9 @@ class Course {
   }
 
   static async getById(id) {
-    const courses = await Course.getAll()
-    return courses.find(c => c.id === id)
+    const products = await Product.getAll()
+    return products.find(c => c.id === id)
   }
 }
 
-module.exports = Course
+module.exports = Product

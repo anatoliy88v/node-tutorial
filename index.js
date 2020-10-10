@@ -3,7 +3,7 @@ const path = require('path')
 const expressHandlebars = require('express-handlebars')
 const homeRoutes = require('./routes/home')
 const cartRoutes = require('./routes/cart')
-const coursesRoutes = require('./routes/courses')
+const productsRoutes = require('./routes/products')
 const addRoutes = require('./routes/add')
 
 const app = express()
@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({extended: true}))
 
 app.use('/', homeRoutes)
-app.use('/courses', coursesRoutes)
+app.use('/products', productsRoutes)
 app.use('/add', addRoutes)
 app.use('/cart', cartRoutes)
 

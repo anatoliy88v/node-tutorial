@@ -8,23 +8,23 @@ const p = path.join(
 )
 
 class Cart {
-  static async add(course) {
+  static async add(product) {
     const cart = await Cart.fetch()
 
-    const idx = cart.courses.findIndex(c => c.id === course.id)
-    const candidate = cart.courses[idx]
+    const idx = cart.products.findIndex(item => item.id === product.id)
+    const newProduct = cart.products[idx]
 
-    if (candidate) {
-      // check if course already in the cart and ++ it quantity
-      candidate.count++
-      cart.courses[idx] = candidate
+    if (newProduct) {
+      // check if product already in the cart and ++ it quantity
+      newProduct.count++
+      cart.products[idx] = newProduct
     } else {
-      // add course to the cart
-      course.count = 1
-      cart.courses.push(course)
+      // add product to the cart
+      product.count = 1
+      cart.products.push(product)
     }
 
-    cart.price += +course.price
+    cart.price += +product.price
 
     return new Promise ((resolve, reject) => {
       fs.writeFile(p, JSON.stringify(cart), err => {
@@ -39,18 +39,18 @@ class Cart {
 
   static async remove(id) {
     const cart = await Cart.fetch()
-    const idx = cart.courses.findIndex(c => c.id === id)
-    const course = cart.courses[idx]
+    const idx = cart.products.findIndex(c => c.id === id)
+    const product = cart.products[idx]
 
-    if (course.count === 1) {
+    if (product.count === 1) {
       // delete
-      cart.courses = cart.courses.filter(c => c.id !== id)
+      cart.products = cart.products.filter(c => c.id !== id)
     } else {
       // change quantity
-      cart.courses[idx].count--
+      cart.products[idx].count--
     }
 
-    cart.price -= course.price
+    cart.price -= product.price
 
     return new Promise ((resolve, reject) => {
       fs.writeFile(p, JSON.stringify(cart), err => {
