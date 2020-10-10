@@ -19,8 +19,8 @@ if ($cart) {
         method: 'delete'
       }).then(res => res.json())
         .then(cart => {
-          if (cart.courses.length) {
-            const html = cart.courses.map(c => {
+          if (cart.products.length) {
+            const html = cart.products.map(c => {
               return `
               <tr>
                 <td>${c.title}</td>

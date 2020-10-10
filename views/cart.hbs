@@ -1,6 +1,6 @@
 <h1>Cart</h1>
 <div id="cart">
-  {{#if courses.length}}
+  {{#if products.length}}
     <table>
       <thead>
         <tr>
@@ -11,7 +11,7 @@
       </thead>
       <tbody>
 
-        {{#each courses}}
+        {{#each products}}
         <tr>
           <td>{{title}}</td>
           <td>{{count}}</td>
@@ -23,7 +23,6 @@
 
       </tbody>
     </table>
-
     <p><strong>Price:</strong> <span class="price">{{price}}</span></p>
   {{else}}
     <p>Cart is empty</p>
