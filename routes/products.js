@@ -4,7 +4,7 @@ const router = Router();
 
 
 router.get('/', async (req, res) => {
-  const products = await Product.getAll()
+  const products = await Product.find()
   res.render('products', {
     title: 'Products',
     isProducts: true,
@@ -17,7 +17,7 @@ router.get('/:id/edit', async (req, res) => {
     return res.redirect('/')
   }
 
-  const product = await Product.getById(req.params.id)
+  const product = await Product.findById(req.params.id)
 
   res.render('product-edit', {
     title: `Edit ${product.title}`,
@@ -26,12 +26,14 @@ router.get('/:id/edit', async (req, res) => {
 })
 
 router.post('/edit', async (req, res) => {
-  await Product.update(req.body)
+  const {id} = req.body
+  delete req.body.id
+  await Product.findByIdAndUpdate(id, req.body)
   res.redirect('/products')
 })
 
 router.get('/:id', async (req, res) => {
-  const product = await Product.getById(req.params.id)
+  const product = await Product.findById(req.params.id)
   res.render('product', {
     layout: 'empty',
     title: `Product ${product.title}`,

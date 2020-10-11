@@ -1,5 +1,6 @@
 const express = require('express')
 const path = require('path')
+const mongoose = require('mongoose')
 const expressHandlebars = require('express-handlebars')
 const homeRoutes = require('./routes/home')
 const cartRoutes = require('./routes/cart')
@@ -10,8 +11,14 @@ const app = express()
 
 const hbs = expressHandlebars.create({
   defaultLayout: 'main',
-  extname: 'hbs'
+  extname: 'hbs',
 })
+
+hbs._renderTemplate = function (template, context, options) {
+  options.allowProtoMethodsByDefault = true;
+  options.allowProtoPropertiesByDefault = true;
+  return template(context, options);
+};
 
 app.engine('hbs', hbs.engine)
 app.set('view engine', 'hbs')
@@ -27,6 +34,16 @@ app.use('/cart', cartRoutes)
 
 const PORT = process.env.PORT || 3000
 
-app.listen(PORT, () => {
-  console.log(`Server is runnung on port ${PORT}`)
-})
+async function start(){
+  try {
+    const url = `mongodb+srv://anatoliy:GmiDVufQ8qs75G4g@cluster0.zf6un.mongodb.net/shop`
+    await mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true})
+    app.listen(PORT, () => {
+      console.log(`Server is runnung on port ${PORT}`)
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+start()
