@@ -1,6 +1,6 @@
 const {Schema, model} = require('mongoose')
 
-const product = new Schema({
+const productSchema = new Schema({
   title: {
     type: String,
     required: true
@@ -9,7 +9,18 @@ const product = new Schema({
     type: Number,
     required: true
   },
-  img: String
+  img: String,
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }
 })
 
-module.exports = model('Product', product)
+productSchema.method('toClient', function() {
+  const product = this.toObject()
+  product.id = product._id
+  delete product._id
+  return product
+})
+
+module.exports = model('Product', productSchema)

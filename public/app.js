@@ -20,13 +20,13 @@ if ($cart) {
       }).then(res => res.json())
         .then(cart => {
           if (cart.products.length) {
-            const html = cart.products.map(c => {
+            const html = cart.products.map(item => {
               return `
               <tr>
-                <td>${c.title}</td>
-                <td>${c.count}</td>
+                <td>${item.title}</td>
+                <td>${item.count}</td>
                 <td>
-                  <button class="btn btn-small js-remove" data-id="${c.id}">Delete</button>
+                  <button class="btn btn-small js-remove" data-id="${item.id}">Delete</button>
                 </td>
               </tr>
               `

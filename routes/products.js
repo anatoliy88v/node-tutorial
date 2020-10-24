@@ -5,6 +5,9 @@ const router = Router();
 
 router.get('/', async (req, res) => {
   const products = await Product.find()
+    .populate('userId', 'email name')
+    .select('title price img')
+
   res.render('products', {
     title: 'Products',
     isProducts: true,
@@ -30,6 +33,17 @@ router.post('/edit', async (req, res) => {
   delete req.body.id
   await Product.findByIdAndUpdate(id, req.body)
   res.redirect('/products')
+})
+
+router.post('/remove', async (req, res) => {
+  try {
+    await Product.deleteOne({
+      _id: req.body.id
+    })
+    res.redirect('/products')
+  } catch(error) {
+    console.log(error)
+  }
 })
 
 router.get('/:id', async (req, res) => {
