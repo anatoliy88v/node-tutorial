@@ -1,6 +1,6 @@
 <h1>Edit {{product.title}}</h1>
 
-<form action="/products/edit" method="POST">
+<form action="/products/edit" method="POST" class="product-form">
   <div class="input-field">
     <input id="Title" name="title" type="text" class="validate" value="{{product.title}}" required>
     <label for="title">Product name</label>
@@ -21,5 +21,10 @@
 
   <input type="hidden" name="id" value="{{product.id}}">
 
-  <button class="btn btn-primary">Save product</button>
+  <button type="submit" class="btn btn-primary">Save product</button>
+</form>
+
+<form action="/products/remove" method="POST">
+  <input type="hidden" name="id" value="{{product.id}}">
+  <button class="btn red">Remove product</button>
 </form>
