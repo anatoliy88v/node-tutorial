@@ -9,15 +9,26 @@
       <li class="{{#if isProducts }}active{{/if}}">
         <a href="/products">Products</a>
       </li>
-      <li class="{{#if isAdd }}active{{/if}}">
-        <a href="/add">Add product</a>
-      </li>
-      <li class="{{#if isCart }}active{{/if}}">
-        <a href="/cart">Cart</a>
-      </li>
-      <li class="{{#if isOrder }}active{{/if}}">
-        <a href="/orders">Orders</a>
-      </li>
+
+      {{#if isAuth}}
+        <li class="{{#if isAdd }}active{{/if}}">
+          <a href="/add">Add product</a>
+        </li>
+        <li class="{{#if isCart }}active{{/if}}">
+          <a href="/cart">Cart</a>
+        </li>
+        <li class="{{#if isOrder }}active{{/if}}">
+          <a href="/orders">Orders</a>
+        </li>
+        <li>
+          <a href="/auth/logout">Logout</a>
+        </li>
+      {{else}}
+        <li class="{{#if isLogin }}active{{/if}}">
+          <a href="/auth/login#login">Login</a>
+        </li>
+      {{/if}}
+
     </ul>
   </div>
 </nav>
