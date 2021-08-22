@@ -41,7 +41,7 @@ app.set('views', 'views')
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({extended: true}))
 app.use(session({
-  secret: 'some_value',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   store
